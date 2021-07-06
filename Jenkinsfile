@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment = {
+    environment {
         RELEASE = '20.04'
     }
     stages {
