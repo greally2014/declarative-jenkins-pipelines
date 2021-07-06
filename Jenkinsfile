@@ -10,12 +10,12 @@ pipeline {
                 LOG_LEVEL = 'INFO'
             }
             steps {
-                sh 'echo "This is $BUILD_NUMBER of demo $DEMO"'
+                echo 'Building release ${RELEASE} with log level ${LOG_LEVEL}...'
             }
         }
         stage('Test') {
             steps {
-                echo "Testing release ${RELEASE}"
+                echo "Testing release ${RELEASE}..."
             }
         }
         stage('Deploy') {
@@ -25,6 +25,9 @@ pipeline {
                 parameters {
                     string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
                 }
+            }
+            steps {
+                echo 'Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}'
             }
         }
     }
