@@ -10,7 +10,7 @@ pipeline {
                 LOG_LEVEL = 'INFO'
             }
             steps {
-                echo 'Building release ${RELEASE} with log level ${LOG_LEVEL}...'
+                echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
             }
         }
         stage('Test') {
@@ -27,7 +27,7 @@ pipeline {
                 }
             }
             steps {
-                echo 'Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}'
+                echo "Deploying release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
             }
         }
     }
