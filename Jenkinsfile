@@ -1,15 +1,36 @@
 pipeline {
-  agent any
-  stages {
-    stage('Stage 1') {
-      steps {
-        echo 'This is $BUILD_NUMBER of demo $DEMO'
-        sh 'echo "This is $BUILD_NUMBER of demo $DEMO"'
-      }
+    agent any
+    environment = {
+        RELEASE = '20.04'
     }
-
-  }
-  environment {
-    DEMO = '1'
-  }
+    stages {
+        stage('Build') {
+            agent any
+            environment {
+                LOG_LEVEL = 'INFO'
+            }
+            steps {
+                sh 'echo "This is $BUILD_NUMBER of demo $DEMO"'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing release ${RELEASE}"
+            }
+        }
+        stage('Deploy') {
+            input {
+                message = 'Deploy?'
+                ok 'Do it!'
+                parameters {
+                    string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment environment')
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Prints whether deploy happened or not, success or failure'
+        }
+    }
 }
